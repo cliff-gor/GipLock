@@ -18,7 +18,7 @@ class LockTuyaApplication : Application() {
 
         try {
             // Attempt to load Tuya’s native security lib
-            System.loadLibrary("ThingSmartSecurity")
+//            System.loadLibrary("ThingSmartSecurity")
             Log.d("LockTuyaApp", "✅ ThingSmartSecurity.so loaded")
 
             Log.d("LockTuyaApp", "Initializing ThingHomeSdk")
