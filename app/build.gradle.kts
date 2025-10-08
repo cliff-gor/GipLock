@@ -70,6 +70,7 @@ configurations.all {
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
+    implementation(files("libs/security-algorithm-1.0.0-beta.aar"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -116,6 +117,14 @@ dependencies {
 
     api("com.thingclips.smart:thingsmart-bizbundle-family")
     implementation("com.thingclips.smart:thingsmart-bizbundle-device_activator")
+
+    implementation("com.thingclips.smart:thingsmart-lock-sdk:6.4.0")
+
+    //Home Sdk
+   //implementation("com.thingclips.smart:thingsmart-home-sdk:6.4.0")
+
+    //implementation("com.thingclips.smart:thingsmart-device-activator:6.4.0")
+
 
 //    Compose Navigation 3
     implementation(libs.androidx.navigation3.ui)

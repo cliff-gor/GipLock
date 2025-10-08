@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.cliffgor.mysmartlock.activation.DevicePairingScreen
 import com.cliffgor.mysmartlock.ui.theme.MySmartLockTheme
 import com.thingclips.smart.home.sdk.ThingHomeSdk
 
@@ -62,7 +63,15 @@ fun AppNavHost() {
             )
         }
         composable("main") {
-            TuyaConnectionStatusScreen()
+            TuyaConnectionStatusScreen(
+                onAddDevice = { navController.navigate("pair") }
+            )
+        }
+
+        composable("pair") {
+            DevicePairingScreen(
+                onDone = { navController.popBackStack() }
+            )
         }
     }
 }

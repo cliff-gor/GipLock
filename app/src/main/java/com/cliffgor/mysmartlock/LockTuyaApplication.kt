@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import com.thingclips.smart.home.sdk.ThingHomeSdk
+import com.thingclips.smart.optimus.sdk.ThingOptimusSdk
 
 class LockTuyaApplication : Application() {
 
@@ -12,21 +13,39 @@ class LockTuyaApplication : Application() {
             private set
     }
 
-
     override fun onCreate() {
         super.onCreate()
 
         try {
-            // Attempt to load Tuya’s native security lib
-//            System.loadLibrary("ThingSmartSecurity")
-            Log.d("LockTuyaApp", "✅ ThingSmartSecurity.so loaded")
+            Log.d("LockTuyaApp", "Starting Tuya SDK initialization...")
 
-            Log.d("LockTuyaApp", "Initializing ThingHomeSdk")
+            // 1. Initialize the core Tuya SDK
             ThingHomeSdk.init(this)
-            Log.d("LockTuyaApp", "ThingHomeSdk initialized")
+            Log.d("LockTuyaApp", "ThingHomeSdk initialized successfully")
+
+            // 2. (Optional) Enable debug mode for development
+            ThingHomeSdk.setDebugMode(true)
+            Log.d("LockTuyaApp", "Debug mode enabled")
+
+            // 3. Initialize the Optimus SDK with logging
+            Log.d("LockTuyaApp", "Initializing ThingOptimusSdk...")
+            ThingOptimusSdk.init(this)
+            Log.d("LockTuyaApp", "ThingOptimusSdk initialized successfully")
+
+            // 4. Verify both SDKs are working
+            Log.d("LockTuyaApp", "All Tuya SDKs initialized and ready")
             isInitialized.value = true
-        } catch (e: UnsatisfiedLinkError) {
-            Log.e("LockTuyaApp", "❌ Failed to load ThingSmartSecurity.so or initialize ThingHomeSdk", e)
+
+        } catch (e: Exception) {
+            Log.e("LockTuyaApp", "Failed to initialize Tuya SDKs", e)
+            // You might want to track which SDK failed
+            isInitialized.value = false
         }
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        Log.d("LockTuyaApp", "Cleaning up Tuya SDKs...")
+        ThingHomeSdk.onDestroy()
     }
 }
